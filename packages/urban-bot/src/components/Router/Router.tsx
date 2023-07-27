@@ -13,9 +13,10 @@ type RouterProps = {
     children: React.ReactNode;
     withInitializeCommands?: boolean;
     historyLength?: number;
+    helperComponent?: React.ReactNode;
 };
 
-export function Router({ children, withInitializeCommands = false, historyLength = 5 }: RouterProps) {
+export function Router({ children, withInitializeCommands = false, historyLength = 5, helperComponent }: RouterProps) {
     const { bot } = useBotContext();
     const history = useRef<string[]>([]);
     const [activeOptions, setActiveOptions] = React.useState(() => ({
@@ -90,6 +91,7 @@ export function Router({ children, withInitializeCommands = false, historyLength
                 query: activeOptions.query,
             }}
         >
+            {helperComponent && helperComponent}
             {component ? <component.type {...component.props} key={activeOptions.path.key} /> : null}
         </RouterContext.Provider>
     );
