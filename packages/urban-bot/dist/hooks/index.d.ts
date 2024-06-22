@@ -1,0 +1,17 @@
+import type { UrbanEventListener, UrbanBotType } from '../types';
+export declare function useAnyEvent<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'any'>): void;
+export declare function useSticker<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'sticker'>): void;
+export declare function useAnimation<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'animation'>): void;
+export declare function useAudio<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'audio'>): void;
+export declare function useContact<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'contact'>): void;
+export declare function useFile<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'file'>): void;
+export declare function useInvoice<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'invoice'>): void;
+export declare function useLocation<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'location'>): void;
+export declare function useImage<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'image'>): void;
+export declare function usePoll<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'poll'>): void;
+export declare function useVideo<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'video'>): void;
+export declare function useVoice<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'voice'>): void;
+export declare function useVideoNote<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'video_note'>): void;
+export declare function useMediaGroup<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'media_group'>): void;
+export declare function useDice<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'dice'>): void;
+export declare function useAction<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'action'>): void;

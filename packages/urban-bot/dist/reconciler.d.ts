@@ -1,0 +1,2 @@
+import ReactReconciler from 'react-reconciler';
+export declare const reactReconciler: ReactReconciler.Reconciler<import("./node").UrbanNode<import("./types").UrbanBotType<import("./types").UrbanNativeEvent<any, any>, any>> | import("./node").UrbanNodeChat | import("./node").UrbanNodeRoot, unknown, unknown, import("./node").UrbanNode<import("./types").UrbanBotType<import("./types").UrbanNativeEvent<any, any>, any>> | import("./node").UrbanNodeChat, unknown>;
