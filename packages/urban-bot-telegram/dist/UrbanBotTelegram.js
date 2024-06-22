@@ -588,6 +588,8 @@ class UrbanBotTelegram {
                 const response = await this.client.sendDocument(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
+                }, {
+                    ...(message.data.filename ? { filename: message.data.filename } : {}),
                 });
                 (_t = (_s = message.data).onSent) === null || _t === void 0 ? void 0 : _t.call(_s, response);
                 return response;
@@ -743,13 +745,14 @@ class UrbanBotTelegram {
         }
     }
     deleteMessage(message) {
+        var _a, _b;
         if (Array.isArray(message.meta)) {
             message.meta.forEach(({ chat, message_id }) => {
-                this.client.deleteMessage(chat.id, String(message_id));
+                (chat === null || chat === void 0 ? void 0 : chat.id) && this.client.deleteMessage(chat.id, String(message_id));
             });
         }
         else {
-            this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+            ((_b = (_a = message === null || message === void 0 ? void 0 : message.meta) === null || _a === void 0 ? void 0 : _a.chat) === null || _b === void 0 ? void 0 : _b.id) && this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
         }
     }
     initializeCommands(commands) {

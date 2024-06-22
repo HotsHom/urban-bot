@@ -7,6 +7,7 @@ export declare type UrbanMessageFileData = UrbanMessageCommonData & {
     buttons?: UrbanButton[] | UrbanButton[][];
     isReplyButtons?: boolean;
     name?: string;
+    filename?: string;
 };
 export declare type UrbanMessageFile = UrbanMessageCommon & {
     nodeName: 'urban-file';

@@ -721,10 +721,17 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-file': {
                 const params = formatParamsForNewMessage(message);
 
-                const response = await this.client.sendDocument(message.chat.id, message.data.file, {
-                    ...params,
-                    caption: message.data.title,
-                });
+                const response = await this.client.sendDocument(
+                    message.chat.id,
+                    message.data.file,
+                    {
+                        ...params,
+                        caption: message.data.title,
+                    },
+                    {
+                        ...(message.data.filename ? { filename: message.data.filename } : {}),
+                    },
+                );
 
                 message.data.onSent?.(response);
 
@@ -931,10 +938,10 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     deleteMessage(message: UrbanExistingMessage<UrbanBotTelegramType>) {
         if (Array.isArray(message.meta)) {
             message.meta.forEach(({ chat, message_id }) => {
-                this.client.deleteMessage(chat.id, String(message_id));
+                chat?.id && this.client.deleteMessage(chat.id, String(message_id));
             });
         } else {
-            this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+            message?.meta?.chat?.id && this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
         }
     }
 

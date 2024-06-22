@@ -8,6 +8,7 @@ export type UrbanMessageFileData = UrbanMessageCommonData & {
     buttons?: UrbanButton[] | UrbanButton[][];
     isReplyButtons?: boolean;
     name?: string;
+    filename?: string;
 };
 
 export type UrbanMessageFile = UrbanMessageCommon & {

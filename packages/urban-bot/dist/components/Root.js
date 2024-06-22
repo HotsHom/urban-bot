@@ -47,7 +47,7 @@ function Root({ children, bot, sessionTimeSeconds = 60 * 60 * 24 * 7, isNewMessa
                 setFirstMessage(message);
             }
             if (sessionTimeSeconds && sessionTimeSeconds !== Infinity) {
-                clearTimeout(timeoutIdsRef.current[chatId]);
+                timeoutIdsRef && timeoutIdsRef.current[chatId] && clearTimeout(timeoutIdsRef.current[chatId]);
                 timeoutIdsRef.current[chatId] = setTimeout(() => {
                     chatsRef.current.delete(chatId);
                     $$managerBot.deleteChat(chatId);
