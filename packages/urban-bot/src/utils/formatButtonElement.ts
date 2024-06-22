@@ -3,13 +3,21 @@ import { Button } from '../components/Button/Button';
 import { isArrayMatrix } from './isArrayMatrix';
 import { getRandomId } from './getRandomId';
 import type { ButtonProps } from '../components/Button/types';
-import type { OtherProps, ButtonElement } from '../types';
+import type {
+    OtherProps,
+    ButtonElement,
+    SpreadField,
+    UrbanSyntheticEventAction,
+    UrbanBotType,
+    UrbanNativeEvent,
+} from '../types';
 
 export type FormattedButton = OtherProps & {
     id: string;
     text: string;
-    // FIXME describe type for onClick?
-    onClick?: (...args: unknown[]) => unknown;
+    onClick?: (
+        args: SpreadField<UrbanSyntheticEventAction<UrbanBotType<UrbanNativeEvent<any, any>, any>>, 'payload'>,
+    ) => void;
 };
 
 export function formatButtonElement(

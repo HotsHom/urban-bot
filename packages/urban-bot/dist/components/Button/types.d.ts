@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { ButtonElement, OtherProps, UrbanButtonStyle, UrbanMessageCommonData } from '../../types';
+import type { ButtonElement, OtherProps, SpreadField, UrbanBotType, UrbanButtonStyle, UrbanMessageCommonData, UrbanNativeEvent, UrbanSyntheticEventAction } from '../../types';
 export declare type ButtonGroupProps = UrbanMessageCommonData & {
     title?: ReactNode;
     isReplyButtons?: boolean;
@@ -19,5 +19,5 @@ export declare type ButtonProps = OtherProps & {
     };
     phoneNumber?: string | number;
     isDisabled?: boolean;
-    onClick?: (...args: unknown[]) => unknown;
+    onClick?: (args: SpreadField<UrbanSyntheticEventAction<UrbanBotType<UrbanNativeEvent<any, any>, any>>, 'payload'>) => void;
 };

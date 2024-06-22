@@ -1,7 +1,7 @@
 import type { UrbanBotType, UrbanListener } from '../bot';
 import type { UrbanSyntheticEvent, UrbanSyntheticEventByType, UrbanSyntheticEventType } from './UrbanSyntheticEvent';
 
-type SpreadField<T, K extends keyof T> = Omit<T, K> & T[K];
+export type SpreadField<T, K extends keyof T> = Omit<T, K> & T[K];
 
 export type UrbanListenerByType<
     BotType extends UrbanBotType,

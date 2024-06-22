@@ -1,5 +1,14 @@
 import type { ReactNode } from 'react';
-import type { ButtonElement, OtherProps, UrbanButtonStyle, UrbanMessageCommonData } from '../../types';
+import type {
+    ButtonElement,
+    OtherProps,
+    SpreadField,
+    UrbanBotType,
+    UrbanButtonStyle,
+    UrbanMessageCommonData,
+    UrbanNativeEvent,
+    UrbanSyntheticEventAction,
+} from '../../types';
 
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: ReactNode;
@@ -19,6 +28,7 @@ export type ButtonProps = OtherProps & {
     webApp?: { url: string };
     phoneNumber?: string | number;
     isDisabled?: boolean;
-    // FIXME describe type for onClick?
-    onClick?: (...args: unknown[]) => unknown;
+    onClick?: (
+        args: SpreadField<UrbanSyntheticEventAction<UrbanBotType<UrbanNativeEvent<any, any>, any>>, 'payload'>,
+    ) => void;
 };
