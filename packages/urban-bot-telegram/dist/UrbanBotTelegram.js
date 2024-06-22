@@ -467,7 +467,6 @@ class UrbanBotTelegram {
         this.client.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
         this.client.on('location', (ctx) => this.handleMessage('location', ctx));
         this.client.on('photo', (ctx) => this.handleMessage('image', ctx));
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.client.on('poll', (ctx) => this.handleMessage('poll', ctx));
         this.client.on('video', (ctx) => this.handleMessage('video', ctx));
         this.client.on('voice', (ctx) => this.handleMessage('voice', ctx));
@@ -748,22 +747,15 @@ class UrbanBotTelegram {
         var _a, _b;
         if (Array.isArray(message.meta)) {
             message.meta.forEach(({ chat, message_id }) => {
-                (chat === null || chat === void 0 ? void 0 : chat.id) && this.client.deleteMessage(chat.id, String(message_id));
+                (chat === null || chat === void 0 ? void 0 : chat.id) && this.client.deleteMessage(chat.id, message_id);
             });
         }
         else {
-            ((_b = (_a = message === null || message === void 0 ? void 0 : message.meta) === null || _a === void 0 ? void 0 : _a.chat) === null || _b === void 0 ? void 0 : _b.id) && this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+            ((_b = (_a = message === null || message === void 0 ? void 0 : message.meta) === null || _a === void 0 ? void 0 : _a.chat) === null || _b === void 0 ? void 0 : _b.id) && this.client.deleteMessage(message.meta.chat.id, message.meta.message_id);
         }
     }
     initializeCommands(commands) {
-        // FIXME this methods should be fixed in node-telegram-bot-api
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        return this.client._request('setMyCommands', {
-            form: {
-                commands: JSON.stringify(commands),
-            },
-        });
+        return this.client.setMyCommands(commands);
     }
     editMedia(message) {
         const metaToEdit = {
@@ -801,7 +793,7 @@ class UrbanBotTelegram {
         const { chat_id, message_id } = metaToEdit;
         const options = { ...params, caption: message.data.title };
         try {
-            await this.client.deleteMessage(chat_id, String(message_id));
+            await this.client.deleteMessage(chat_id, message_id);
             return await this.client.sendVoice(chat_id, message.data.file, options);
         }
         catch (e) {
@@ -820,7 +812,7 @@ class UrbanBotTelegram {
         }
         const { chat_id, message_id } = metaToEdit;
         try {
-            await this.client.deleteMessage(chat_id, String(message_id));
+            await this.client.deleteMessage(chat_id, message_id);
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             return await this.client.sendVideoNote(chat_id, message.data.file, params);

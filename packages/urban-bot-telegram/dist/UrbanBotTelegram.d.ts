@@ -19,7 +19,7 @@ export declare class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> 
     sendMessage(message: UrbanMessage): Promise<TelegramBot.Message>;
     updateMessage(message: UrbanExistingMessage<UrbanBotTelegramType>): Promise<TelegramBot.Message | undefined> | undefined;
     deleteMessage(message: UrbanExistingMessage<UrbanBotTelegramType>): void;
-    initializeCommands(commands: UrbanCommand[]): any;
+    initializeCommands(commands: UrbanCommand[]): Promise<boolean>;
     editMedia(message: UrbanExistingMessageByType<UrbanBotTelegramType, 'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file' | 'urban-animation'>): void;
     editVoice(message: UrbanExistingMessageByType<UrbanBotTelegramType, 'urban-voice'>): Promise<TelegramBot.Message | undefined>;
     editVideoNote(message: UrbanExistingMessageByType<UrbanBotTelegramType, 'urban-video-note'>): Promise<TelegramBot.Message | undefined>;

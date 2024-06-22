@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/telegram",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Create Telegram chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -53,7 +53,7 @@
     "typescript": "4.4.3"
   },
   "dependencies": {
-    "@types/node-telegram-bot-api": "0.53.6",
+    "@types/node-telegram-bot-api": "0.64.0",
     "express": "4.17.1",
     "node-telegram-bot-api": "0.58.0"
   },

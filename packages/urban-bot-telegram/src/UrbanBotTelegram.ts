@@ -71,8 +71,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         this.client.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
         this.client.on('location', (ctx) => this.handleMessage('location', ctx));
         this.client.on('photo', (ctx) => this.handleMessage('image', ctx));
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.client.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
+        this.client.on('poll', (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
         this.client.on('video', (ctx) => this.handleMessage('video', ctx));
         this.client.on('voice', (ctx) => this.handleMessage('voice', ctx));
         this.client.on('video_note', (ctx) => this.handleMessage('video_note', ctx));
@@ -938,22 +937,15 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     deleteMessage(message: UrbanExistingMessage<UrbanBotTelegramType>) {
         if (Array.isArray(message.meta)) {
             message.meta.forEach(({ chat, message_id }) => {
-                chat?.id && this.client.deleteMessage(chat.id, String(message_id));
+                chat?.id && this.client.deleteMessage(chat.id, message_id);
             });
         } else {
-            message?.meta?.chat?.id && this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+            message?.meta?.chat?.id && this.client.deleteMessage(message.meta.chat.id, message.meta.message_id);
         }
     }
 
     initializeCommands(commands: UrbanCommand[]) {
-        // FIXME this methods should be fixed in node-telegram-bot-api
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        return this.client._request('setMyCommands', {
-            form: {
-                commands: JSON.stringify(commands),
-            },
-        });
+        return this.client.setMyCommands(commands as TelegramBot.BotCommand[]);
     }
 
     editMedia(
@@ -1004,7 +996,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         const options = { ...params, caption: message.data.title };
 
         try {
-            await this.client.deleteMessage(chat_id, String(message_id));
+            await this.client.deleteMessage(chat_id, message_id);
             return await this.client.sendVoice(chat_id, message.data.file, options);
         } catch (e) {
             console.log('error', e);
@@ -1026,7 +1018,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         const { chat_id, message_id } = metaToEdit;
 
         try {
-            await this.client.deleteMessage(chat_id, String(message_id));
+            await this.client.deleteMessage(chat_id, message_id);
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             return await this.client.sendVideoNote(chat_id, message.data.file, params);
