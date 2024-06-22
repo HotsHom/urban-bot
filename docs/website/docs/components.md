@@ -39,7 +39,9 @@ const { render, Root, Text } = require('@urban-bot/core');
  * [Option](#option)
  * [Contact](#contact)
  * [Notification](#notification)
-    
+ * [Dialog](#dialog)
+ * [DialogStep](#dialogstep)
+
 ## render  
 The main function that starts React. Works similar `ReactDOM.render`.  
 #### Instance of `Root` component.
@@ -717,6 +719,54 @@ Send a video to a chat.
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
 
+## VideoNote
+Send a video note (circle) to a chat.
+```jsx
+<VideoNote file="https://path-to-video.mp4" />
+```
+
+#### file
+> File id or URL or Stream or Buffer.
+###### required
+`string` | `Buffer` | `ReadableStream`
+```jsx
+<VideoNote file="id123" />
+```  
+```jsx
+<VideoNote file="https://path-to-video.mp4" />
+```  
+```jsx
+<VideoNote file={fs.createReadStream('/files/video.mp4')} />
+```  
+```jsx
+<VideoNote file={fs.readFileSync('/files/video.mp4')} />  
+```  
+#### name
+###### optional
+`string`
+```jsx
+<VideoNote name="I'm a cook" />
+``` 
+#### author
+###### optional
+`string`
+```jsx
+<VideoNote author="Leeroy Jenkins" />
+```
+#### duration
+###### optional
+`number`
+```jsx
+<VideoNote duration={10} />
+``` 
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
+#### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
 
 ## Audio
 Send an audio to a chat.
@@ -767,6 +817,58 @@ Send an audio to a chat.
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
+
+
+## Voice
+Send an audio to a chat.
+```jsx
+<Voice file="https://path-to-audio.mp3" />
+```
+
+#### file
+> File id or URL or Stream or Buffer.
+###### required
+`string` | `Buffer` | `ReadableStream`
+```jsx
+<Voice file="id123" />
+```  
+```jsx
+<Voice file="https://path-to-audio.mp3" />
+```  
+```jsx
+<Voice file={fs.createReadStream('/files/audio.mp3')} />
+```  
+```jsx
+<Voice file={fs.readFileSync('/files/audio.mp3')} />  
+```  
+#### name
+###### optional
+`string`
+```jsx
+<Voice name="Morning Mood" />
+``` 
+#### author
+###### optional
+`string`
+```jsx
+<Voice author="Edvard Grieg" />
+``` 
+#### duration
+###### optional
+`number`
+```jsx
+<Voice duration={10} />
+``` 
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
+#### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+
 
 ## Animation
 Send an animation to a chat.
@@ -1102,3 +1204,186 @@ Use it for sending a message every n time.
 > Message sends one time in `intervalSeconds`. First time is after `intervalSeconds`.
 ###### required
 `number`
+
+-----
+
+## Dialog
+Required wrapper for `DialogStep`.
+```jsx
+import React from 'react';
+import { Dialog, DialogStep, Text } from '@urban-bot/core';
+import { FinishedContent } from './FinishedContent'
+
+function DialogExample() {
+  return (
+    <Dialog
+      finishedContent={<FinishedContent/>}
+      onFinish={(answers) => console.log(answers)}
+    >
+      <DialogStep id="name" content={<Text>Hello, what is your name?</Text>}>
+        <DialogStep id="age" content={<Text>How old are you?</Text>}>
+          <DialogStep id="country" content={<Text>Where you from?</Text>}/>
+        </DialogStep>
+      </DialogStep>
+    </Dialog>
+  );
+}
+```  
+
+#### children
+>  An instance or instances of `DialogStep`.
+###### required
+[`DialogStep`](#DialogStep)
+```jsx
+<Dialog>
+  <DialogStep id="name" content={<Text>Hello, what is your name?</Text>}>
+      <DialogStep id="age" content={<Text>How old are you?</Text>}/>
+  </DialogStep>
+</Dialog>
+```  
+#### finishedContent
+> Return a `ReactNode` in the end of dialog. Any component(s) from urban-bot
+###### optional
+`ReactNode`  | `ReactNode[]`
+```jsx
+<Dialog finishedContent={<FinishedContent/>}>
+  ....
+</Dialog>
+```
+#### onFinish
+> Callback will call after ending of dialog.
+###### optional
+`Function`
+```jsx
+<Dialog onFinish={(answers) => console.log(answers)}>
+  <DialogStep id="name" content={<Text>Hello, what is your name?</Text>}>
+    <DialogStep id="age" content={<Text>How old are you?</Text>}/>
+  </DialogStep>
+</Dialog> 
+
+// => { name: string, age: string }
+```
+
+## DialogStep
+Should be wrapped by [Dialog](#dialog).
+```jsx
+<DialogStep id="name" content={<Text>Hello, what is your name?</Text>} /> 
+```
+
+#### children
+> Next `DialogStep`
+###### optional
+`(answer: string) => ReactNode` | `ReactNode` | `ReactNode[]`
+```jsx
+<DialogStep id="name" content={<Text>Hello, what is your name?</Text>}>
+  <DialogStep id="age" content={<Text>How old are you?</Text>}/>
+</DialogStep>
+
+//Can get answer from previous step on the next step by `render-props` pattern.
+<DialogStep content={<Text>Hello, what is your name?</Text>}>
+  {(name) => <DialogStep content={<Text>{`${name}, how old are you?`}</Text>}/>}
+</DialogStep>
+```  
+#### content
+> Any component(s) from urban-bot.
+###### required
+`ReactNode`
+
+```jsx
+<DialogStep id="name" content={<Text>Hello, what is your name?</Text>}>
+  <DialogStep
+    id="age"
+    content={
+      <ButtonGroup title={<Text>How old are you?</Text>}>
+        <Button>{`< 18`}</Button>
+        <Button>{`> 18`}</Button>
+      </ButtonGroup>
+    }
+    />
+</DialogStep>
+```  
+
+#### validation
+> Can validate answer in each step and will return a `ReactNode` in each step unless answer is valid.
+###### optional
+`Function`
+
+```jsx
+import { Text } from "@urban-bot/core";
+
+<Dialog onFinish={(answers) => console.log(answers)}>
+  <DialogStep
+    id="name"
+    content={<Text>Hello, what is your name?</Text>}
+    validation={(answer) => {
+      if (answer === 'Bubba') {
+        return <Text>Bubba is baned</Text>
+      }
+      
+      if (answer === 'Terminator') {
+        return "Terminator is not real"
+      }
+      
+      // if it's valid
+      return null
+    }}
+  >
+    ...
+  </Dialog>
+```
+
+#### onNext
+> Can add callback in each step.
+###### optional
+`Function`
+```jsx
+<DialogStep
+  id="name"
+  content={<Text>Hello, what is your name?</Text>} 
+  onNext={(name) => console.log(name)}
+>
+  ...
+</DialogStep>
+```
+
+#### match
+> Allow to create dialog with questions depends on previous answer  
+###### optional
+`string`
+```jsx
+<Dialog>
+  <DialogStep
+    content={
+      <ButtonGroup title="Hi! What do you want to buy?">
+        <Button id="t-shirt">T-Short</Button>
+        <Button id="glasses">Glasses</Button>
+      </ButtonGroup>
+    }
+  >
+    <DialogStep
+      match="t-shirt"
+      content={
+        <ButtonGroup title="Choose size of t-shirt?">
+          <Button id="m">S</Button>
+          <Button id="s">M</Button>
+          <Button id="l">L</Button>
+        </ButtonGroup>
+      }
+    />
+    <DialogStep
+      match="glasses"
+      content={
+        <ButtonGroup title="Choose color of glasses?">
+          <Button id="black">Black</Button>
+          <Button id="white">White</Button>
+        </ButtonGroup>
+      }
+    />
+  </DialogStep>
+</Dialog>  
+```
+
+#### id
+> The unique id. If you don't specify it, it is generated automatically.
+###### optional
+`string`

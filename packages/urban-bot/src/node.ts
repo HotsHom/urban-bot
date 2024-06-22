@@ -1,8 +1,7 @@
-import { shallowEqual } from './utils/shallowEqual';
-import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types/Messages';
-import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBotType } from './types/UrbanBot';
 import debouncePromise from 'debounce-promise';
+import { shallowEqual } from './utils/shallowEqual';
+import { ManagerBot } from './ManagerBot/ManagerBot';
+import type { UrbanBotType, UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types';
 
 export type UrbanNode<BotType extends UrbanBotType = UrbanBotType> = Omit<UrbanExistingMessage<BotType>, 'meta'> & {
     $$managerBot: ManagerBot<BotType>;
@@ -170,13 +169,14 @@ export function updateNode<BotType extends UrbanBotType>(
             throw new Error('sendMessage should return Promise with message meta data to enable updating it.');
         }
 
-        node.meta.then((meta) => {
-            const existingMessage: UrbanExistingMessage<BotType> = {
-                ...message,
-                meta,
-            };
+        node.meta.then(async (meta) => {
+            const existingMessage: UrbanExistingMessage<BotType> = { ...message, meta };
 
-            newNode.updateMessage(existingMessage);
+            const newUpdatedMessage = newNode.updateMessage(existingMessage);
+
+            if (await newUpdatedMessage) {
+                node.meta = newUpdatedMessage;
+            }
         });
     }
 }

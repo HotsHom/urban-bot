@@ -1,7 +1,6 @@
 import React from 'react';
 import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBotType, UrbanChat, UrbanParseMode } from './types';
-import { UrbanBot } from './types/UrbanBot';
+import type { UrbanBotType, UrbanBot, UrbanChat, UrbanParseMode } from './types';
 
 export type BotContextType<Bot extends UrbanBot, BotType extends UrbanBotType = UrbanBotType> = {
     $$managerBot: ManagerBot<BotType>;
@@ -18,7 +17,7 @@ export function getBotContext<Bot extends UrbanBot = UrbanBot, BotType extends U
 }
 
 export type RouterQuery = Record<string, any>;
-export type Navigate<Q = RouterQuery> = (name: string, query?: Q) => void;
+export type Navigate<Q = RouterQuery> = (name: string, query?: Q, replace?: boolean) => void;
 
 export type RouterContext<P extends object = {}, Q = RouterQuery> = {
     navigate: Navigate<Q>;

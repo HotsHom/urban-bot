@@ -1,12 +1,12 @@
-import React from 'react';
-import { useBotContext } from '../hooks/hooks';
-import { UrbanMessageMediaData } from '../types/Messages';
+import { useBotContext } from '../hooks/useBotContext';
+import type { UrbanMessageMediaData } from '../types';
 
 export type MediaProps = UrbanMessageMediaData & {
     isNewMessageEveryRender?: boolean;
 };
 
 export function Media({
+    title,
     files,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
     disableNotification,
@@ -24,6 +24,7 @@ export function Media({
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             data={{
+                title,
                 files,
                 disableNotification,
                 replyToMessageId,

@@ -6,7 +6,9 @@ import { Hooks } from './components/Hooks';
 import { ImageExample } from './components/Image';
 import { Queue } from './components/Queue';
 import { AudioExample } from './components/Audio';
+import { VoiceExample } from './components/Voice';
 import { VideoExample } from './components/Video';
+import { VideoNoteExample } from './components/VideoNote';
 import { FileExample } from './components/File';
 import { PollExample } from './components/Poll';
 import { AnimationExample } from './components/Animation';
@@ -22,6 +24,7 @@ import {
 import { RouterExample } from './components/Router';
 import { FlatDialogExample, TreeDialogExample } from './components/Dialog';
 import { CheckboxDialogExample } from './components/CheckboxDialog';
+import { CommandsMessage } from './CommandsMessage';
 
 dotenv.config();
 
@@ -55,8 +58,14 @@ export function App() {
             <Route path="/audio" description="audio">
                 <AudioExample />
             </Route>
+            <Route path="/voice" description="voice">
+                <VoiceExample />
+            </Route>
             <Route path="/video" description="video">
                 <VideoExample />
+            </Route>
+            <Route path="/video_note" description="video_note">
+                <VideoNoteExample />
             </Route>
             <Route path="/file" description="file">
                 <FileExample />
@@ -94,49 +103,7 @@ export function App() {
                 </Notification>
             </Route>
             <Route path="/start" description="start">
-                <Text isNewMessageEveryRender>
-                    /text
-                    <br />
-                    /image
-                    <br />
-                    /buttons
-                    <br />
-                    /reply_buttons
-                    <br />
-                    /matrix_buttons
-                    <br />
-                    /matrix_buttons_max_columns
-                    <br />
-                    /hooks
-                    <br />
-                    /tree_dialog
-                    <br />
-                    /flat_dialog
-                    <br />
-                    /checkbox_dialog
-                    <br />
-                    /queue
-                    <br />
-                    /audio
-                    <br />
-                    /video
-                    <br />
-                    /file
-                    <br />
-                    /poll
-                    <br />
-                    /contact
-                    <br />
-                    /animation
-                    <br />
-                    /media
-                    <br />
-                    /location
-                    <br />
-                    /router
-                    <br />
-                    /notification
-                </Text>
+                <CommandsMessage />
             </Route>
         </Router>
     );

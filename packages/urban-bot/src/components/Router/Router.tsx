@@ -1,33 +1,27 @@
-import React, { useRef, useCallback } from 'react';
-import { useBotContext } from '../../hooks/hooks';
-import { useText } from '../../hooks/useText';
+import { useState, useEffect, useRef, useCallback, Children } from 'react';
+import { useBotContext } from '../../hooks/useBotContext';
 import { useCommand } from '../../hooks/useCommand';
+import { useText } from '../../hooks/useText';
 import { Navigate, RouterContext } from '../../context';
-import { RouteProps } from './Route';
 import { getParams, matchChild } from './utils';
-import { UrbanCommand } from '../../types';
+import type { ReactElement } from 'react';
+import type { UrbanCommand } from '../../types';
+import type { RouterProps, RouteProps } from './types';
 
 let isCommandsInitialized = false;
-
-type RouterProps = {
-    children: React.ReactNode;
-    withInitializeCommands?: boolean;
-    historyLength?: number;
-    helperComponent?: React.ReactNode;
-};
 
 export function Router({ children, withInitializeCommands = false, historyLength = 5, helperComponent }: RouterProps) {
     const { bot } = useBotContext();
     const history = useRef<string[]>([]);
-    const [activeOptions, setActiveOptions] = React.useState(() => ({
+    const [activeOptions, setActiveOptions] = useState(() => ({
         path: { value: '', key: Math.random() },
         query: {},
     }));
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
+    const childrenArray = Children.toArray(children) as ReactElement<RouteProps>[];
 
     const navigate: Navigate = useCallback(
-        (path: string, query = {}) => {
-            const newHistory = [...history.current, path];
+        (path: string, query = {}, replace = false) => {
+            const newHistory = [...(replace ? history.current.slice(0, -1) : history.current), path];
 
             history.current = newHistory.length <= historyLength ? newHistory : newHistory.slice(1);
 
@@ -36,18 +30,16 @@ export function Router({ children, withInitializeCommands = false, historyLength
         [historyLength],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!withInitializeCommands || isCommandsInitialized) {
             return;
         }
 
         const commands = childrenArray
-            .map((routes) => {
-                return {
-                    command: routes.props.path,
-                    description: routes.props.description,
-                };
-            })
+            .map((routes) => ({
+                command: routes.props.path,
+                description: routes.props.description,
+            }))
             .filter(
                 ({ command, description }) =>
                     typeof command === 'string' && command[0] === bot.commandPrefix && Boolean(description),
@@ -59,7 +51,7 @@ export function Router({ children, withInitializeCommands = false, historyLength
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (childrenArray.some(matchChild(bot.commandPrefix, bot.commandPrefix))) {
             navigate(bot.commandPrefix);
         }

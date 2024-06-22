@@ -1,11 +1,5 @@
-import React from 'react';
+import type { RouteProps } from './types';
 
-export type RouteProps = {
-    path: string | RegExp;
-    description?: string;
-    children: React.ReactNode;
-};
-
-export function Route(props: RouteProps) {
-    return <>{props.children}</>;
+export function Route({ children }: RouteProps) {
+    return <>{children}</>;
 }
