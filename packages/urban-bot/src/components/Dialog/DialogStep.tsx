@@ -15,6 +15,12 @@ export function DialogStep({ children, content, id, onNext, validation, type }: 
     const { onFinish, finishedContent, addAnswer } = useDialog();
 
     useEffect(() => {
+        if (typeof content === 'string') {
+            setDisplayedContent(<Text>content</Text>)
+        }
+    }, []);
+
+    useEffect(() => {
         if (childrenArray.length === 0 && isAnswered && typeof children !== 'function') {
             // TODO call onFinish not inside useEffects
             onFinish();

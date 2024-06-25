@@ -34,7 +34,9 @@ function formatButtonFlatArray(element: ButtonElement | ButtonElement[]): Format
     return React.Children.toArray(element)
         .filter<React.ReactElement<ButtonProps>>(React.isValidElement)
         .map((child) => {
-            if (child.type !== Button) {
+            const { props } = child;
+
+            if (!props || !('onClick' in props && 'children' in props)) {
                 throw new Error('Please use only Button components inside ButtonGroup.');
             }
 
