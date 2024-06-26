@@ -63,7 +63,7 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
     const chatsRef = useRef(chats);
     chatsRef.current = chats;
 
-    const timeoutIdsRef = useRef<{ [key: string]: NodeJS.Timer }>({});
+    const timeoutIdsRef = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
     const [firstMessage, setFirstMessage] = useState<UrbanSyntheticEvent<BotType>>();
 
