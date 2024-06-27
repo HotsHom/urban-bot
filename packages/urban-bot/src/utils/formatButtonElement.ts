@@ -36,7 +36,7 @@ function formatButtonFlatArray(element: ButtonElement | ButtonElement[]): Format
         .map((child) => {
             const { props } = child;
 
-            if (!props || !('onClick' in props && 'children' in props)) {
+            if (!props || !('children' in props)) {
                 throw new Error('Please use only Button components inside ButtonGroup.');
             }
 
