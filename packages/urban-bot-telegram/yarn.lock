@@ -801,9 +801,9 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@urban-bot/core@https://gitpkg.vercel.app/HotsHom/urban-bot/packages/urban-bot?1.0.22":
-  version "1.0.22"
-  resolved "https://gitpkg.vercel.app/HotsHom/urban-bot/packages/urban-bot?1.0.22#d2d8fe2b837c2669a105e333153ba8a44bc06542"
+"@urban-bot/core@https://gitpkg.vercel.app/HotsHom/urban-bot/packages/urban-bot?1.0.24":
+  version "1.0.24"
+  resolved "https://gitpkg.vercel.app/HotsHom/urban-bot/packages/urban-bot?1.0.24#a7b6a7871ca31f8b105ed6d6d6b1ed20e4038d66"
   dependencies:
     array-flatten "3.0.0"
     cross-fetch "3.1.5"
