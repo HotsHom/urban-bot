@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/telegram",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "Create Telegram chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -16,7 +16,7 @@
     "my-publish": "npm run build && npm publish --access public",
     "typecheck": "tsc --noEmit",
     "precommit": "lint-staged",
-    "postinstall": "npm run build"
+    "prepare": "npm run build"
   },
   "keywords": [
     "telegram-bot",
@@ -37,7 +37,7 @@
     "@types/jest": "25.2.1",
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
-    "@urban-bot/core": "https://gitpkg.vercel.app/HotsHom/urban-bot/packages/urban-bot?1.0.24",
+    "@urban-bot/core": "https://gitpkg.vercel.app/HotsHom/urban-bot/packages/urban-bot?1.0.28-core",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-import": "2.20.2",

@@ -48,6 +48,7 @@ import type {
     TelegramOptions,
     MediaGroupCollector,
 } from './types';
+import * as Stream from 'stream';
 
 export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     static TYPE = 'TELEGRAM' as const;
@@ -625,10 +626,14 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
 
-                const response = await this.client.sendPhoto(message.chat.id, message.data.file, {
-                    ...params,
-                    caption: message.data.title,
-                });
+                const response = await this.client.sendPhoto(
+                    message.chat.id,
+                    message.data.file as string | Stream | Buffer,
+                    {
+                        ...params,
+                        caption: message.data.title,
+                    },
+                );
 
                 message.data.onSent?.(response);
 
@@ -650,13 +655,17 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-audio': {
                 const params = formatParamsForNewMessage(message);
 
-                const response = await this.client.sendAudio(message.chat.id, message.data.file, {
-                    ...params,
-                    caption: message.data.title,
-                    duration: message.data.duration,
-                    performer: message.data.author,
-                    title: message.data.name,
-                });
+                const response = await this.client.sendAudio(
+                    message.chat.id,
+                    message.data.file as string | Stream | Buffer,
+                    {
+                        ...params,
+                        caption: message.data.title,
+                        duration: message.data.duration,
+                        performer: message.data.author,
+                        title: message.data.name,
+                    },
+                );
 
                 message.data.onSent?.(response);
 
@@ -665,11 +674,15 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-voice': {
                 const params = formatParamsForNewMessage(message);
 
-                const response = await this.client.sendVoice(message.chat.id, message.data.file, {
-                    ...params,
-                    caption: message.data.title,
-                    duration: message.data.duration,
-                });
+                const response = await this.client.sendVoice(
+                    message.chat.id,
+                    message.data.file as string | Stream | Buffer,
+                    {
+                        ...params,
+                        caption: message.data.title,
+                        duration: message.data.duration,
+                    },
+                );
 
                 message.data.onSent?.(response);
 
@@ -678,13 +691,17 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-video': {
                 const params = formatParamsForNewMessage(message);
 
-                const response = await this.client.sendVideo(message.chat.id, message.data.file, {
-                    ...params,
-                    caption: message.data.title,
-                    duration: message.data.duration,
-                    width: message.data.width,
-                    height: message.data.height,
-                });
+                const response = await this.client.sendVideo(
+                    message.chat.id,
+                    message.data.file as string | Stream | Buffer,
+                    {
+                        ...params,
+                        caption: message.data.title,
+                        duration: message.data.duration,
+                        width: message.data.width,
+                        height: message.data.height,
+                    },
+                );
 
                 message.data.onSent?.(response);
 
@@ -693,10 +710,14 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-video-note': {
                 const params = formatParamsForNewMessage(message);
 
-                const response = await this.client.sendVideoNote(message.chat.id, message.data.file, {
-                    ...params,
-                    duration: message.data.duration,
-                });
+                const response = await this.client.sendVideoNote(
+                    message.chat.id,
+                    message.data.file as string | Stream | Buffer,
+                    {
+                        ...params,
+                        duration: message.data.duration,
+                    },
+                );
 
                 message.data.onSent?.(response);
 
@@ -705,13 +726,17 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-animation': {
                 const params = formatParamsForNewMessage(message);
 
-                const response = await this.client.sendAnimation(message.chat.id, message.data.file, {
-                    ...params,
-                    caption: message.data.title,
-                    duration: message.data.duration,
-                    width: message.data.width,
-                    height: message.data.height,
-                });
+                const response = await this.client.sendAnimation(
+                    message.chat.id,
+                    message.data.file as string | Stream | Buffer,
+                    {
+                        ...params,
+                        caption: message.data.title,
+                        duration: message.data.duration,
+                        width: message.data.width,
+                        height: message.data.height,
+                    },
+                );
 
                 message.data.onSent?.(response);
 
@@ -722,7 +747,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 const response = await this.client.sendDocument(
                     message.chat.id,
-                    message.data.file,
+                    message.data.file as string | Stream | Buffer,
                     {
                         ...params,
                         caption: message.data.title,
@@ -997,7 +1022,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
         try {
             await this.client.deleteMessage(chat_id, message_id);
-            return await this.client.sendVoice(chat_id, message.data.file, options);
+            return await this.client.sendVoice(chat_id, message.data.file as string | Stream | Buffer, options);
         } catch (e) {
             console.log('error', e);
         }
