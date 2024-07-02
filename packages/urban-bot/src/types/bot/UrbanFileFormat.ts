@@ -1,1 +1,3 @@
-export type UrbanFileFormat = string | Buffer | NodeJS.ReadableStream;
+import {Stream} from "stream";
+
+export type UrbanFileFormat = string | Stream | Buffer;
