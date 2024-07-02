@@ -1,2 +1,0 @@
-import type { UrbanBotType, UrbanListenerByType, UrbanSyntheticEventType, UrbanListenerByNativeEventWithSpreadPayload } from '../types';
-export declare function useSubscribeWithSpreadPayload<BotType extends UrbanBotType, EventType extends UrbanSyntheticEventType<BotType>, Event extends Parameters<UrbanListenerByType<BotType, EventType>>[0]>(listener: UrbanListenerByNativeEventWithSpreadPayload<BotType, Event>, eventType: EventType): void;
