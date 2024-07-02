@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/telegram",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Create Telegram chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -16,7 +16,8 @@
     "my-publish": "npm run build && npm publish --access public",
     "typecheck": "tsc --noEmit",
     "precommit": "lint-staged",
-    "prepare": "npm run build"
+    "prepare": "yarn build",
+    "postinstall": "yarn build"
   },
   "keywords": [
     "telegram-bot",
