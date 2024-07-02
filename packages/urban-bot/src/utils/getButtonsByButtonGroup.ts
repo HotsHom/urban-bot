@@ -1,25 +1,25 @@
 import React from 'react';
 import { ButtonGroup } from '../components/Button/ButtonGroup';
 import type { ButtonGroupProps } from '../components/Button/types';
-import type { UrbanElementButtons } from '../global.d';
+import type { UrbanElementButtons } from '../global';
 
 export function getButtonsByButtonGroup(
-    buttonGroupElement: React.FunctionComponentElement<ButtonGroupProps> | undefined,
+  buttonGroupElement: React.FunctionComponentElement<ButtonGroupProps> | undefined
 ) {
-    if (buttonGroupElement === undefined) {
-        return undefined;
-    }
-    if (!React.Children.only(buttonGroupElement) && buttonGroupElement.type !== ButtonGroup) {
-        throw new Error('Pass only one ButtonGroup component to buttons');
-    }
+  if (buttonGroupElement === undefined) {
+    return undefined;
+  }
+  if (!React.Children.only(buttonGroupElement) && buttonGroupElement.type !== ButtonGroup) {
+    throw new Error('Pass only one ButtonGroup component to buttons');
+  }
 
-    const buttonsElementChildren = buttonGroupElement.type(buttonGroupElement.props);
+  const buttonsElementChildren = buttonGroupElement.type(buttonGroupElement.props);
 
-    if (buttonsElementChildren === null) {
-        throw new Error('ButtonGroup component should return children');
-    }
+  if (!buttonsElementChildren || !React.isValidElement(buttonsElementChildren)) {
+    throw new Error('ButtonGroup component should return children');
+  }
 
-    const { data } = buttonsElementChildren.props as UrbanElementButtons;
+  const { data } = buttonsElementChildren.props as UrbanElementButtons;
 
-    return data.buttons;
+  return data.buttons;
 }
